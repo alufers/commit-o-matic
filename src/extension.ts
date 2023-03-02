@@ -8,6 +8,7 @@ import { promisify } from "util";
 import fetch from "node-fetch";
 
 function spawn(command: string, args: string[], options: any): Promise<string> {
+  console.log("spawn", command, args);
   return new Promise((resolve, reject) => {
     const child = childProcess.spawn(command, args, options);
     let stdout = "";
@@ -40,6 +41,9 @@ export function activate(context: vscode.ExtensionContext) {
       const promptTemplate = vscode.workspace
         .getConfiguration("commit-o-matic")
         .get("promptTemplate") as string;
+      const ignoredFiles = vscode.workspace
+        .getConfiguration("commit-o-matic")
+        .get("ignoredFiles") as string[];
       if (!apiKey) {
         vscode.window
           .showErrorMessage(
@@ -90,15 +94,39 @@ export function activate(context: vscode.ExtensionContext) {
         return;
       }
 
+      let diffExcludes: string[] = [];
+      if (Array.isArray(ignoredFiles) && ignoredFiles.length > 0) {
+        diffExcludes.push("--", ".");
+        diffExcludes.push(
+          ...ignoredFiles.map((file) => {
+            return `:(exclude)**/${file}`;
+          })
+        );
+      }
+
+      let areThereStagedChanges =
+        (
+          await spawn("git", ["diff", "--staged"], {
+            cwd: selected.rootUri.path,
+          })
+        ).trim() !== "";
+
       let diff = "";
-      diff = await spawn("git", ["diff", "--staged"], {
+      diff = await spawn("git", ["diff", "--staged", ...diffExcludes], {
         cwd: selected.rootUri.path,
       });
+
+      if (diff.trim() === "" && areThereStagedChanges) {
+        vscode.window.showErrorMessage(
+          "Staged changes consist of files ignored by Commit-o-matic only."
+        );
+        return;
+      }
 
       let didUseUnstagedChanges = false;
 
       if (diff.trim() === "") {
-        diff = await spawn("git", ["diff"], {
+        diff = await spawn("git", ["diff", ...diffExcludes], {
           cwd: selected.rootUri.path,
         });
         didUseUnstagedChanges = true;

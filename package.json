@@ -59,6 +59,23 @@
           "description": "Prompt template for ChatGPT. $$$DIFF$$$ will be replaced with the git diff.",
           "markdownDescription": "Prompt template for ChatGPT. `$$$DIFF$$$` will be replaced with the git diff.",
           "editPresentation": "multilineText"
+        },
+        "commit-o-matic.ignoredFiles": {
+          "type": "array",
+          "default": [
+            "yarn.lock",
+            "package-lock.json",
+            "poetry.lock",
+            "Cargo.lock",
+            "composer.lock",
+            "Gemfile.lock",
+            "Pipfile.lock",
+            "go.sum",
+            "mix.lock",
+            "Gopkg.lock",
+            "lockfile.json"
+          ],
+          "description": "List of files to ignore when generating the git diff sent to ChatGPT."
         }
       }
     }
