@@ -1,71 +1,45 @@
 # commit-o-matic
 
-This is the README for your extension "commit-o-matic". After writing up a brief description, we recommend including the following sections.
+This extension is a simple tool for automating the process of creating a Git commit messages using OpenAI's ChatGPT API. It sends your current git diff to ChatGPT and asks it to summarize the changes. The result is then pre-populated in the commit message box.
 
-## Features
+**WARNING:** This extension sends your git diff to an external API. It is not recommended to use this extension on sensitive repositories. It can break your NDA. 
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
-
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+This extension requires an API key for ChatGPT. You can get one here: https://platform.openai.com/account/api-keys
+
+Please note that the ChatGPT API is a paid service and you will need to give your credit card details to OpenAI. 
+
+**WARNING:** You will be charged for each usage of the extension (it prints the cost in a message box after every time you use it).
+
+The cost for moderately complex diffs is around half an US cent. The extension will issue a warning if the prompt is too long and the cost is likely to be higher than a few cents.
+
+The OpenAI API is limited to 4096 tokens per request, so you should be billed a maxiumum of $0.0081 per one commit message. If your diff is too long, the extension will currently error out.
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
 This extension contributes the following settings:
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+- `commit-o-matic.apiKey`: Your API key for ChatGPT
+- `commit-o-matic.promptTemplate`: The template for the prompt sent to ChatGPT. `$$$DIFF$$$` will be replaced with the git diff.
 
-## Known Issues
+![Image showcasing the settings](./docs/settings-screenshot.png)
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+## Contributing
 
-## Release Notes
+Contributions are welcome. Please open an issue or a pull request.
 
-Users appreciate release notes as you update your extension.
+To run the extension locally, clone the repository and run `npm install`.
+Then open the folder in VS Code and press F5 to start a new window with the extension loaded.
 
-### 1.0.0
+## Disclaimer
 
-Initial release of ...
+This extension is not affiliated with OpenAI in any way. It is not endorsed by OpenAI or anyone officially involved in producing or managing ChatGPT.
 
-### 1.0.1
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-Fixed issue #.
 
-### 1.1.0
+## License
 
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+MIT

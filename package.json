@@ -9,6 +9,7 @@
   "categories": [
     "Other"
   ],
+  "license": "MIT",
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
