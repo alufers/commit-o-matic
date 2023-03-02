@@ -11,6 +11,9 @@ This extension is a simple tool for automating the process of creating a Git com
 
 **WARNING:** This extension sends your git diff to an external API. It is not recommended to use this extension on sensitive repositories. It can break your NDA. 
 
+## Install
+
+You can install the extension from the [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=alufers.commit-o-matic).
 
 ## Requirements
 

@@ -17,6 +17,7 @@
     "type": "git",
     "url": "https://github.com/alufers/commit-o-matic"
   },
+  "publisher": "alufers",
   "contributes": {
     "commands": [
       {
