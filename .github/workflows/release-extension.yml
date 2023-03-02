@@ -54,13 +54,13 @@ jobs:
         env:
           RELEASE_TYPE: ${{ github.event.inputs.release-type }}
 
-      # Update changelog unreleased section with new version
-      - name: Update changelog
-        uses: superfaceai/release-changelog-action@v1
-        with:
-          path-to-changelog: CHANGELOG.md
-          version: ${{ env.NEW_VERSION }}
-          operation: release
+      # # Update changelog unreleased section with new version
+      # - name: Update changelog
+      #   uses: superfaceai/release-changelog-action@v1
+      #   with:
+      #     path-to-changelog: CHANGELOG.md
+      #     version: ${{ env.NEW_VERSION }}
+      #     operation: release
 
       # Commit changes
       - name: Commit CHANGELOG.md and package.json changes and create tag
