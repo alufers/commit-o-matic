@@ -7,7 +7,26 @@ import * as childProcess from "child_process";
 import { promisify } from "util";
 import fetch from "node-fetch";
 
-const exec = promisify(childProcess.exec);
+function spawn(command: string, args: string[], options: any): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const child = childProcess.spawn(command, args, options);
+    let stdout = "";
+    let stderr = "";
+    child.stdout.on("data", (data) => {
+      stdout += data;
+    });
+    child.stderr.on("data", (data) => {
+      stderr += data;
+    });
+    child.on("close", (code) => {
+      if (code !== 0) {
+        reject(new Error(stderr));
+      } else {
+        resolve(stdout);
+      }
+    });
+  });
+}
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -72,16 +91,16 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       let diff = "";
-      ({ stdout: diff } = await exec("git diff --cached", {
+      diff = await spawn("git", ["diff", "--staged"], {
         cwd: selected.rootUri.path,
-      }));
+      });
 
       let didUseUnstagedChanges = false;
 
       if (diff.trim() === "") {
-        ({ stdout: diff } = await exec("git diff", {
+        diff = await spawn("git", ["diff"], {
           cwd: selected.rootUri.path,
-        }));
+        });
         didUseUnstagedChanges = true;
       }
 
