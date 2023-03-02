@@ -90,8 +90,25 @@ export function activate(context: vscode.ExtensionContext) {
         return;
       }
 
+      // roughly count the words in the diff and warn if it's too big
+      const wordsCount = diff.split(/\s+/).length;
+      if (wordsCount > 1000) {
+        const result = await vscode.window
+          .showWarningMessage(
+            `The diff contains ${wordsCount} words. This might incur a higher ChatGPT usage cost. Do you want to continue?`,
+            { modal: true },
+            "Yes",
+            "No"
+          )
+          .then((value) => {
+            return value === "Yes";
+          });
+        if (!result) {
+          return;
+        }
+      }
+
       try {
-		
         const resp = await fetch("https://api.openai.com/v1/chat/completions", {
           headers: {
             Authorization: `Bearer ${apiKey}`,
