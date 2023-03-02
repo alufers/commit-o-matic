@@ -1,0 +1,84 @@
+{
+  "name": "commit-o-matic",
+  "displayName": "Commit-o-matic",
+  "description": "Generate Git commit messages with ChatGPT.",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.76.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "commit-o-matic.generate-commit",
+        "title": "Generate commit message with ChatGPT",
+        "icon": {
+          "light": "media/robot-icon-light.svg",
+          "dark": "media/robot-icon-dark.svg"
+        }
+      }
+    ],
+    "menus": {
+      "scm/title": [
+        {
+          "command": "commit-o-matic.generate-commit",
+          "group": "navigation@1",
+          "title": "Generate commit message with ChatGPT",
+          "when": "scmProvider == git"
+        },
+        {
+          "command": "commit-o-matic.generate-commit",
+          "group": "inline",
+          "title": "Generate commit message with ChatGPT",
+          "when": "scmProvider == git"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Commit-o-matic",
+      "properties": {
+        "commit-o-matic.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "ChatGPT API key for commit-o-matic. Create yours at https://platform.openai.com/account/api-keys."
+        },
+        "commit-o-matic.promptTemplate": {
+          "type": "string",
+          "default": "Generate a concise commit message from the following git diff. \nThe message should contain a first line with a short summary and if the commit is non-trivial a longer description after a blank line.\nThe diff:\n```\n$$$DIFF$$$\n```",
+          "description": "Prompt template for ChatGPT. $$$DIFF$$$ will be replaced with the git diff.",
+          "markdownDescription": "Prompt template for ChatGPT. `$$$DIFF$$$` will be replaced with the git diff.",
+          "editPresentation": "multilineText"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "16.x",
+    "@types/node-fetch": "^2.6.2",
+    "@types/vscode": "^1.76.0",
+    "@typescript-eslint/eslint-plugin": "^5.53.0",
+    "@typescript-eslint/parser": "^5.53.0",
+    "@vscode/test-electron": "^2.2.3",
+    "eslint": "^8.34.0",
+    "glob": "^8.1.0",
+    "mocha": "^10.2.0",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.9"
+  }
+}
