@@ -4,6 +4,7 @@
 
 https://user-images.githubusercontent.com/5400940/222413169-9e8c2bec-ed68-47e2-87b3-fdb1d2265a7a.mp4
 
+![Extension logo](./extension-icon.png)
 
 
 This extension is a simple tool for automating the process of creating a Git commit messages using OpenAI's ChatGPT API. It sends your current git diff to ChatGPT and asks it to summarize the changes. The result is then pre-populated in the commit message box.
