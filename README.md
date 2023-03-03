@@ -15,6 +15,8 @@ This extension is a simple tool for automating the process of creating a Git com
 
 You can install the extension from the [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=alufers.commit-o-matic).
 
+Alternatively you can get it on the [Open VSX Registry](https://open-vsx.org/extension/alufers/commit-o-matic).
+
 ## Requirements
 
 This extension requires an API key for ChatGPT. You can get one here: https://platform.openai.com/account/api-keys
